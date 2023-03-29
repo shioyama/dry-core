@@ -2,7 +2,7 @@
 
 require "dry/core/cache"
 
-RSpec.describe Dry::Core::Cache do
+RSpec.describe $loader::Dry::Core::Cache do
   shared_examples_for "class with cache" do
     describe "#fetch_or_store" do
       it "stores and fetches a value" do
@@ -22,7 +22,7 @@ RSpec.describe Dry::Core::Cache do
 
   let(:base_class) do
     Class.new do
-      extend Dry::Core::Cache
+      extend $loader::Dry::Core::Cache
     end
   end
 

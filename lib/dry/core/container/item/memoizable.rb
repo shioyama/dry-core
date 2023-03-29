@@ -40,7 +40,7 @@ module Dry
 
           # @private
           def raise_not_supported_error
-            raise ::Dry::Core::Container::Error, "Memoize only supported for a block or a proc"
+            raise Dry::Core::Container::Error, "Memoize only supported for a block or a proc"
           end
         end
       end

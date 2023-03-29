@@ -2,10 +2,10 @@
 
 require "dry/core/extensions"
 
-RSpec.describe Dry::Core::Extensions do
+RSpec.describe $loader::Dry::Core::Extensions do
   subject do
     Class.new do
-      extend Dry::Core::Extensions
+      extend $loader::Dry::Core::Extensions
     end
   end
 

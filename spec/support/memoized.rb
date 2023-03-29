@@ -6,7 +6,7 @@ class Memoized
       # NOP
     end
   }
-  include Dry::Core::Memoizable
+  include $loader::Dry::Core::Memoizable
 
   def test1(arg1, *args, kwarg1:, kwarg2: "default", **kwargs, &block)
     # NOP

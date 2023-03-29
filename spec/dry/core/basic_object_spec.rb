@@ -6,7 +6,7 @@ require "pp"
 class ExternalTestClass
 end
 
-class TestClass < Dry::Core::BasicObject
+class TestClass < $loader::Dry::Core::BasicObject
   class InternalTestClass
   end
 
@@ -25,7 +25,7 @@ class InspectTestClass < TestClass
   end
 end
 
-RSpec.describe Dry::Core::BasicObject do
+RSpec.describe $loader::Dry::Core::BasicObject do
   describe ".const_missing" do
     subject { TestClass.new }
 

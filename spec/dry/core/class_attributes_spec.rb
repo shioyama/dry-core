@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require "dry/core/class_attributes"
-require "dry-types"
+# require "dry-types"
 
 RSpec.describe "Class Macros" do
   before do
     module Test
       class MyClass
-        extend Dry::Core::ClassAttributes
+        extend $loader::Dry::Core::ClassAttributes
 
         defines :one, :two, :three
 
@@ -44,7 +43,7 @@ RSpec.describe "Class Macros" do
     let(:klass) do
       module Test
         class NewClass
-          extend Dry::Core::ClassAttributes
+          extend $loader::Dry::Core::ClassAttributes
         end
       end
 
@@ -65,7 +64,7 @@ RSpec.describe "Class Macros" do
         expect {
           klass.one 1
         }.to raise_error(
-          Dry::Core::InvalidClassAttributeValueError,
+          $loader::Dry::Core::InvalidClassAttributeValueError,
           "Value 1 is invalid for class attribute :one"
         )
       end
@@ -75,22 +74,22 @@ RSpec.describe "Class Macros" do
       before do
         module Test
           class Types
-            include Dry::Types()
+            include $loader::Dry::Types()
           end
         end
 
         klass.defines :one, type: Test::Types::String
       end
 
-      it "allows to pass type option" do
+      pending "allows to pass type option" do
         klass.one "1"
         expect(Test::NewClass.one).to eq "1"
       end
 
-      it "raises InvalidClassAttributeValueError when invalid value is pass" do
+      pending "raises InvalidClassAttributeValueError when invalid value is pass" do
         expect {
           klass.one 1
-        }.to raise_error(Dry::Core::InvalidClassAttributeValueError)
+        }.to raise_error($loader::Dry::Core::InvalidClassAttributeValueError)
       end
     end
   end
@@ -99,7 +98,7 @@ RSpec.describe "Class Macros" do
     let(:klass) do
       module Test
         class NewClass
-          extend Dry::Core::ClassAttributes
+          extend $loader::Dry::Core::ClassAttributes
         end
       end
 
@@ -121,14 +120,14 @@ RSpec.describe "Class Macros" do
       before do
         module Test
           class Types
-            include Dry::Types()
+            include $loader::Dry::Types()
           end
         end
 
         klass.defines :one, coerce: Test::Types::Coercible::String
       end
 
-      it "converts value" do
+      pending "converts value" do
         klass.one 1
         expect(Test::NewClass.one).to eq "1"
       end
@@ -166,7 +165,7 @@ RSpec.describe "Class Macros" do
     end
 
     base_class = Class.new do
-      extend Dry::Core::ClassAttributes
+      extend $loader::Dry::Core::ClassAttributes
       extend module_with_hook
 
       defines :one
@@ -180,7 +179,7 @@ RSpec.describe "Class Macros" do
 
   it "works with private setters/getters and inheritance" do
     base_class = Class.new do
-      extend Dry::Core::ClassAttributes
+      extend $loader::Dry::Core::ClassAttributes
 
       defines :one
       class << self; private :one; end

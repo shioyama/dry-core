@@ -1,32 +1,37 @@
 # frozen_string_literal: true
 
-require "zeitwerk"
+require "im"
+
+loader = Im::Loader.new.tap do |loader|
+  root = File.expand_path("..", __dir__)
+  loader.tag = "dry-core"
+  loader.inflector = Im::GemInflector.new("#{root}/dry-core.rb")
+  loader.push_dir(root)
+  loader.ignore("#{root}/dry-core.rb")
+  loader.inflector.inflect("namespace_dsl" => "NamespaceDSL")
+end
+
+loader.setup
 
 require "dry/core/constants"
-require "dry/core/errors"
-require "dry/core/version"
 
 # :nodoc:
-module Dry
+module loader::Dry
   # :nodoc:
   module Core
     include Constants
 
-    def self.loader
-      @loader ||= Zeitwerk::Loader.new.tap do |loader|
-        root = File.expand_path("..", __dir__)
-        loader.tag = "dry-core"
-        loader.inflector = Zeitwerk::GemInflector.new("#{root}/dry-core.rb")
-        loader.push_dir(root)
-        loader.ignore(
-          "#{root}/dry-core.rb",
-          "#{root}/dry/core/{constants,errors,version}.rb"
+    class InvalidClassAttributeValueError < StandardError
+      def initialize(name, value)
+        super(
+          "Value #{value.inspect} is invalid for class attribute #{name.inspect}"
         )
-        loader.inflector.inflect("namespace_dsl" => "NamespaceDSL")
       end
     end
 
-    loader.setup
+    class << self
+      attr_accessor :loader
+    end
   end
 
   # See dry/core/equalizer.rb
@@ -39,7 +44,9 @@ module Dry
     #
     # @api public
     def self.Equalizer(*keys, **options)
-      Dry::Core::Equalizer.new(*keys, **options)
+      Core.loader::Dry::Core::Equalizer.new(*keys, **options)
     end
   end
 end
+
+loader::Dry::Core.loader = loader

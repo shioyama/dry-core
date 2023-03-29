@@ -2,11 +2,11 @@
 
 require "dry/core/descendants_tracker"
 
-RSpec.describe Dry::Core::DescendantsTracker do
+RSpec.describe $loader::Dry::Core::DescendantsTracker do
   before do
     module Test
       class Parent
-        extend Dry::Core::DescendantsTracker
+        extend $loader::Dry::Core::DescendantsTracker
       end
 
       class Child < Parent

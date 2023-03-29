@@ -3,7 +3,7 @@
 RSpec.shared_examples "a memoizable class" do
   subject(:object) do
     Class.new(described_class) do
-      include Dry::Core::Memoizable
+      include $loader::Dry::Core::Memoizable
 
       attr_reader :falsey_call_count
 

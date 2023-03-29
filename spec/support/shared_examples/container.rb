@@ -4,7 +4,7 @@ RSpec.shared_examples "a container" do
   describe "configuration" do
     describe "registry" do
       describe "default" do
-        it { expect(klass.config.registry).to be_a(Dry::Core::Container::Registry) }
+        it { expect(klass.config.registry).to be_a($loader::Dry::Core::Container::Registry) }
       end
 
       describe "custom" do
@@ -25,7 +25,7 @@ RSpec.shared_examples "a container" do
           # HACK: Have to reset the configuration so that it doesn't
           # interfere with other specs
           klass.configure do |config|
-            config.registry = Dry::Core::Container::Registry.new
+            config.registry = $loader::Dry::Core::Container::Registry.new
           end
         end
 
@@ -44,7 +44,7 @@ RSpec.shared_examples "a container" do
 
     describe "resolver" do
       describe "default" do
-        it { expect(klass.config.resolver).to be_a(Dry::Core::Container::Resolver) }
+        it { expect(klass.config.resolver).to be_a($loader::Dry::Core::Container::Resolver) }
       end
 
       describe "custom" do
@@ -64,7 +64,7 @@ RSpec.shared_examples "a container" do
           # HACK: Have to reset the configuration so that it doesn't
           # interfere with other specs
           klass.configure do |config|
-            config.resolver = Dry::Core::Container::Resolver.new
+            config.resolver = $loader::Dry::Core::Container::Resolver.new
           end
         end
 
@@ -210,7 +210,7 @@ RSpec.shared_examples "a container" do
 
         context "when receiving something other than a proc" do
           it do
-            expect { container.register(:item, "Hello!", memoize: true) }.to raise_error(Dry::Core::Container::Error)
+            expect { container.register(:item, "Hello!", memoize: true) }.to raise_error($loader::Dry::Core::Container::Error)
           end
         end
       end
@@ -246,7 +246,7 @@ RSpec.shared_examples "a container" do
       it do
         container.register(:item, proc { "item" })
 
-        expect { container.register(:item, proc { "item" }) }.to raise_error(Dry::Core::Container::KeyError)
+        expect { container.register(:item, proc { "item" }) }.to raise_error($loader::Dry::Core::Container::KeyError)
       end
     end
 
@@ -271,7 +271,7 @@ RSpec.shared_examples "a container" do
 
     describe "#merge" do
       let(:key) { :key }
-      let(:other) { Dry::Core::Container.new }
+      let(:other) { $loader::Dry::Core::Container.new }
 
       before do
         other.register(key) { :item }
@@ -571,7 +571,7 @@ RSpec.shared_examples "a container" do
 
     describe "import" do
       it "allows importing of namespaces" do
-        ns = Dry::Core::Container::Namespace.new("one") do
+        ns = $loader::Dry::Core::Container::Namespace.new("one") do
           register("two", 2)
         end
 
@@ -581,7 +581,7 @@ RSpec.shared_examples "a container" do
       end
 
       it "allows importing of nested namespaces" do
-        ns = Dry::Core::Container::Namespace.new("two") do
+        ns = $loader::Dry::Core::Container::Namespace.new("two") do
           register("three", 3)
         end
 
