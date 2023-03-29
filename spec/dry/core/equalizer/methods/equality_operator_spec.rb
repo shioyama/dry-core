@@ -3,7 +3,7 @@
 require "spec_helper"
 require "dry/core/equalizer"
 
-RSpec.describe Dry::Core::Equalizer::Methods, "#==" do
+RSpec.describe $loader::Dry::Core::Equalizer::Methods, "#==" do
   subject { object == other }
 
   let(:object)          { described_class.new(true) }
@@ -11,7 +11,7 @@ RSpec.describe Dry::Core::Equalizer::Methods, "#==" do
 
   let(:super_class) do
     Class.new do
-      include Dry::Core::Equalizer::Methods
+      include $loader::Dry::Core::Equalizer::Methods
 
       attr_reader :boolean
 

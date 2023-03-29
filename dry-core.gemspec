@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nikita Shilnikov"]
   spec.email         = ["fg@flashgordon.ru"]
   spec.license       = "MIT"
-  spec.version       = Dry::Core::VERSION.dup
+  spec.version       = "1.0.0"
 
   spec.summary       = "A toolset of small support modules used throughout the dry-rb ecosystem"
   spec.description   = spec.summary
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
 
   # to update dependencies edit project.yml
   spec.add_runtime_dependency "concurrent-ruby", "~> 1.0"
-  spec.add_runtime_dependency "zeitwerk", "~> 2.6"
+  spec.add_runtime_dependency "im", "~> 0.2"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

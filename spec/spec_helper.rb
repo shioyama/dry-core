@@ -15,6 +15,8 @@ end
 
 require "dry/core"
 
+$loader = Im::Registry.loaders.first
+
 module Test
   def self.remove_constants
     constants.each(&method(:remove_const))

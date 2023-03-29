@@ -251,7 +251,7 @@ module Dry
         #
         # @api public
         def namespace(namespace, &block)
-          ::Dry::Core::Container::NamespaceDSL.new(
+          Dry::Core::Container::NamespaceDSL.new(
             self,
             namespace,
             config.namespace_separator,

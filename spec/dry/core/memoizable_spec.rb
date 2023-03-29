@@ -5,9 +5,9 @@ require "dry/core/memoizable"
 require "tempfile"
 require_relative "../../support/memoized"
 
-RSpec.describe Dry::Core::Memoizable do
+RSpec.describe $loader::Dry::Core::Memoizable do
   before do
-    Dry::Core::Deprecations.set_logger!(Tempfile.new("dry_deprecations"))
+    $loader::Dry::Core::Deprecations.set_logger!(Tempfile.new("dry_deprecations"))
   end
 
   before { Memoized.memoize_methods }
@@ -93,7 +93,7 @@ RSpec.describe Dry::Core::Memoizable do
 
     let(:object) do
       Class.new do
-        include Dry::Core::Memoizable
+        include $loader::Dry::Core::Memoizable
         attr_reader :args, :kwargs, :block
 
         def initialize(*args, **kwargs, &block)
@@ -124,7 +124,7 @@ RSpec.describe Dry::Core::Memoizable do
   end
 
   context "test calls" do
-    let(:klass) { Class.new.include(Dry::Core::Memoizable) }
+    let(:klass) { Class.new.include($loader::Dry::Core::Memoizable) }
 
     let(:instance) { klass.new }
 

@@ -2,10 +2,10 @@
 
 require "dry/core/constants"
 
-RSpec.describe Dry::Core::Constants do
+RSpec.describe $loader::Dry::Core::Constants do
   before do
     class ClassWithConstants
-      include Dry::Core::Constants
+      include $loader::Dry::Core::Constants
 
       def empty_array
         EMPTY_ARRAY
@@ -40,22 +40,22 @@ RSpec.describe Dry::Core::Constants do
   subject { ClassWithConstants.new }
 
   it "makes constants available in your class" do
-    expect(subject.empty_array).to be Dry::Core::Constants::EMPTY_ARRAY
+    expect(subject.empty_array).to be $loader::Dry::Core::Constants::EMPTY_ARRAY
     expect(subject.empty_array).to eql([])
 
-    expect(subject.empty_hash).to be Dry::Core::Constants::EMPTY_HASH
+    expect(subject.empty_hash).to be $loader::Dry::Core::Constants::EMPTY_HASH
     expect(subject.empty_hash).to eql({})
 
-    expect(subject.empty_set).to be Dry::Core::Constants::EMPTY_SET
+    expect(subject.empty_set).to be $loader::Dry::Core::Constants::EMPTY_SET
     expect(subject.empty_set).to eql(Set.new)
 
-    expect(subject.empty_string).to be Dry::Core::Constants::EMPTY_STRING
+    expect(subject.empty_string).to be $loader::Dry::Core::Constants::EMPTY_STRING
     expect(subject.empty_string).to eql("")
 
-    expect(subject.empty_opts).to be Dry::Core::Constants::EMPTY_OPTS
+    expect(subject.empty_opts).to be $loader::Dry::Core::Constants::EMPTY_OPTS
     expect(subject.empty_opts).to eql({})
 
-    expect(subject.undefined).to be Dry::Core::Constants::Undefined
+    expect(subject.undefined).to be $loader::Dry::Core::Constants::Undefined
   end
 
   describe "nested" do
@@ -72,12 +72,12 @@ RSpec.describe Dry::Core::Constants do
     subject { ClassWithConstants::Nested.new }
 
     example "constants available in lexical scope" do
-      expect(subject.empty_array).to be Dry::Core::Constants::EMPTY_ARRAY
+      expect(subject.empty_array).to be $loader::Dry::Core::Constants::EMPTY_ARRAY
     end
   end
 
   describe "Undefined" do
-    subject(:undefined) { Dry::Core::Constants::Undefined }
+    subject(:undefined) { $loader::Dry::Core::Constants::Undefined }
 
     describe ".inspect" do
       it 'returns "Undefined"' do

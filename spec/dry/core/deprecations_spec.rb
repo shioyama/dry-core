@@ -3,13 +3,13 @@
 require "dry/core/deprecations"
 require "tempfile"
 
-RSpec.describe Dry::Core::Deprecations do
+RSpec.describe $loader::Dry::Core::Deprecations do
   let(:log_file) do
     Tempfile.new("dry_deprecations")
   end
 
   before do
-    Dry::Core::Deprecations.set_logger!(log_file)
+    $loader::Dry::Core::Deprecations.set_logger!(log_file)
   end
 
   let(:log_output) do
@@ -19,24 +19,24 @@ RSpec.describe Dry::Core::Deprecations do
 
   describe ".warn" do
     it "logs a warning message" do
-      Dry::Core::Deprecations.warn("hello world")
+      $loader::Dry::Core::Deprecations.warn("hello world")
       expect(log_output).to include("[deprecated] hello world")
     end
 
     it "logs a tagged message" do
-      Dry::Core::Deprecations.warn("hello world", tag: :spec)
+      $loader::Dry::Core::Deprecations.warn("hello world", tag: :spec)
       expect(log_output).to include("[spec] hello world")
     end
 
     it "prints information about the caller frame if uplevel is given" do
-      Dry::Core::Deprecations.warn("hello world", uplevel: 0)
+      $loader::Dry::Core::Deprecations.warn("hello world", uplevel: 0)
       expect(log_output).to include("/rspec/")
     end
   end
 
   describe ".announce" do
     it "warns about a deprecated method" do
-      Dry::Core::Deprecations.announce(:foo, "hello world", tag: :spec, uplevel: 0)
+      $loader::Dry::Core::Deprecations.announce(:foo, "hello world", tag: :spec, uplevel: 0)
       expect(log_output).to include("[spec] foo is deprecated and will be removed")
       expect(log_output).to include("hello world")
       expect(log_output).to include("/rspec/")
@@ -70,7 +70,7 @@ RSpec.describe Dry::Core::Deprecations do
   describe ".deprecate_class_method" do
     subject(:klass) do
       Class.new do
-        extend Dry::Core::Deprecations[:spec]
+        extend $loader::Dry::Core::Deprecations[:spec]
 
         def self.name
           "Test"
@@ -102,7 +102,7 @@ RSpec.describe Dry::Core::Deprecations do
   describe ".deprecate" do
     subject(:klass) do
       Class.new do
-        extend Dry::Core::Deprecations[:spec]
+        extend $loader::Dry::Core::Deprecations[:spec]
 
         def self.name
           "Test"
@@ -134,7 +134,7 @@ RSpec.describe Dry::Core::Deprecations do
   describe ".deprecate_constant" do
     before do
       module Test
-        extend Dry::Core::Deprecations[:spec]
+        extend $loader::Dry::Core::Deprecations[:spec]
 
         Obsolete = :no_more
 
@@ -160,7 +160,7 @@ RSpec.describe Dry::Core::Deprecations do
   describe ".[]" do
     subject(:klass) do
       Class.new do
-        extend Dry::Core::Deprecations[:spec]
+        extend $loader::Dry::Core::Deprecations[:spec]
       end
     end
 
@@ -188,8 +188,8 @@ RSpec.describe Dry::Core::Deprecations do
     end
 
     it "accepts preconfigured logger" do
-      Dry::Core::Deprecations.set_logger!(logger)
-      Dry::Core::Deprecations.warn("Don't!")
+      $loader::Dry::Core::Deprecations.set_logger!(logger)
+      $loader::Dry::Core::Deprecations.warn("Don't!")
 
       expect(logger.messages).to eql(["[deprecated] Don't!"])
     end
@@ -221,12 +221,12 @@ RSpec.describe Dry::Core::Deprecations do
     end
 
     before do
-      module Dry::Core::Deprecations
+      module $loader::Dry::Core::Deprecations
         remove_instance_variable :@logger
       end
     end
 
-    let(:default_logger) { Dry::Core::Deprecations.logger }
+    let(:default_logger) { $loader::Dry::Core::Deprecations.logger }
 
     it "sets $stderr as a default stream" do
       default_logger.warn("Test")
